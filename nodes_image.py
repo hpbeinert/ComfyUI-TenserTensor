@@ -96,7 +96,7 @@ def get_torch_device(device=None):
     )
 
 
-def load_image(filename, create_mask, device=None) -> tuple[torch.Tensor, torch.Tensor]:
+def load_image(filename, device=None) -> tuple[torch.Tensor, torch.Tensor]:
     tdevice = get_torch_device(device)
     path = folder_paths.get_annotated_filepath(filename)
     pil_image = pillow(Image.open, path)
@@ -116,14 +116,13 @@ def load_image(filename, create_mask, device=None) -> tuple[torch.Tensor, torch.
         if pil_frame.size != (width, height,):
             continue
 
-        if create_mask:
-            alpha = numpy.zeros((height, width,), dtype=numpy.float32)
-            if 'A' in pil_frame.getbands():
-                alpha = numpy.array(pil_frame.getchannel('A'), dtype=numpy.float32) / 255.0
-            elif pil_frame.mode == 'P' and 'transparency' in pil_frame.info:
-                alpha = numpy.array(pil_frame.convert('RGBA').getchannel('A'), dtype=numpy.float32) / 255.0
-            tmask = torch.from_numpy(1.0 - alpha).to(tdevice)
-            masks.append(tmask)
+        alpha = numpy.zeros((height, width,), dtype=numpy.float32)
+        if 'A' in pil_frame.getbands():
+            alpha = numpy.array(pil_frame.getchannel('A'), dtype=numpy.float32) / 255.0
+        elif pil_frame.mode == 'P' and 'transparency' in pil_frame.info:
+            alpha = numpy.array(pil_frame.convert('RGBA').getchannel('A'), dtype=numpy.float32) / 255.0
+        tmask = torch.from_numpy(1.0 - alpha).to(tdevice)
+        masks.append(tmask)
 
         rgb_frame = pil_frame.convert("RGB")
         np_image = numpy.array(rgb_frame, dtype=numpy.float32) / 255.0
@@ -170,7 +169,6 @@ class TT_ImageLoaderResizerNode(IO.ComfyNode):
                 IO.Combo.Input("resize_method", options=RESIZE_METHODS, advanced=True),
                 IO.Int.Input("dimension_step", default=1, min=1, max=256, advanced=True),
                 IO.Combo.Input("megapixels", options=MEGAPIXELS, advanced=True),
-                IO.Boolean.Input("create_mask", default=False, label_on="Mask", label_off="Empty"),
                 IO.Combo.Input("image", options=get_image_files(), upload=UploadType.image)
             ],
             outputs=[
@@ -188,7 +186,6 @@ class TT_ImageLoaderResizerNode(IO.ComfyNode):
             "resize_image": resize,
             "resize_method": kwargs.get("resize_method"),
             "dimension_step": kwargs.get("dimension_step"),
-            "create_mask": kwargs.get("create_mask"),
         }
 
         if resize:
@@ -206,7 +203,7 @@ class TT_ImageLoaderResizerNode(IO.ComfyNode):
 
     @classmethod
     def execute(cls, **kwargs) -> IO.NodeOutput:
-        timage, tmask = load_image(kwargs.get("image"), kwargs.get("create_mask"))
+        timage, tmask = load_image(kwargs.get("image"))
         if kwargs.get("resize_image"):
             resize_method, megapixels, dimension_step = (
                 kwargs.get("resize_method"),
@@ -462,7 +459,7 @@ class TT_GuiderImageReferenceNode(IO.ComfyNode):
 
     @classmethod
     def execute(cls, **kwargs) -> IO.NodeOutput:
-        timage, _ = load_image(kwargs.get("image"), create_mask=False)
+        timage, _ = load_image(kwargs.get("image"))
         vae, guider, resize_method, megapixels, dimension_step = (
             kwargs.get("vae"),
             kwargs.get("guider"),
