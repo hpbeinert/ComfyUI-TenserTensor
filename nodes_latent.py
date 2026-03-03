@@ -1,11 +1,11 @@
-# (c) TenserTensor || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
+# (c) TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
 
 import math
 from typing import Any, override
 
 import torch
 
-import comfy.sample
+from comfy import sample
 from comfy_api.latest import IO, ComfyExtension
 
 CATEGORY = "TenserTensor/Latent"
@@ -24,7 +24,8 @@ class RandomNoise:
     def generate_noise(self, input_latent):
         latent_image = input_latent["samples"]
         batch_idx = input_latent["batch_index"] if "batch_index" in input_latent else None
-        return comfy.sample.prepare_noise(latent_image, self.seed, batch_idx)
+
+        return sample.prepare_noise(latent_image, self.seed, batch_idx)
 
 
 class TT_LatentFactoryNode(IO.ComfyNode):
@@ -93,6 +94,7 @@ class TT_LatentFactoryNode(IO.ComfyNode):
         )
         width, height = cls.calculate_dimensions(total_pixels, ratio_w, ratio_h)
 
+        scale_factor, channels = None, None
         match kwargs.get("model_type"):
             case "FLUX1.D":
                 scale_factor, channels = 8, 16

@@ -85,10 +85,4 @@ def guided_sample_latents(latent, guider, sigmas, sampler, random_noise):
     retval.pop("downscale_ratio_spacial", None)
     retval["samples"] = samples
 
-#    if "x0" in interim_buffer:
-#        clean_latent = guider.model_patcher.model.process_latent_out(interim_buffer["x0"].cpu())
-#        if samples.is_nested:
-#            clean_latent = NT.NestedTensor(U.unpack_latents(clean_latent, [t.shape for t in samples.unbind()]))
-#        retval["samples"] = clean_latent
-
     return retval

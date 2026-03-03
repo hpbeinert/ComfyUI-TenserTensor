@@ -1,4 +1,5 @@
-# (c) TenserTensor || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
+# (c) TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
+
 import fnmatch
 import math
 import os
@@ -445,7 +446,6 @@ class TT_GuiderImageReferenceNode(IO.ComfyNode):
             display_name="TT Guider Image Reference",
             category=CATEGORY,
             description="",
-            is_output_node=True,
             inputs=[
                 IO.Vae.Input("vae"),
                 IO.Guider.Input("guider"),
