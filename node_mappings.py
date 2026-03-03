@@ -1,4 +1,4 @@
-# (c) TenserTensor || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
+# (c) TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
 
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -140,7 +140,7 @@ NODE_CLASS_MAPPINGS = {
     # Context V3 Nodes
     "TT_BaseContextNode": TT_BaseContextNode,
     "TT_BaseContextFlux2Node": TT_BaseContextFlux2Node,
-    "TT_BaseContextPassthroughNode": TT_BaseContextPassthroughNode,
+    "TT_ContextPassthroughNode": TT_ContextPassthroughNode,
     "TT_ContextNode": TT_ContextNode,
     "TT_ContextFlux2Node": TT_ContextFlux2Node,
     "TT_ContextSetGuiderNode": TT_ContextSetGuiderNode,
@@ -221,7 +221,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     # Context V3 Nodes
     "TT_BaseContextNode": "TT Base Context",
     "TT_BaseContextFlux2Node": "TT FLUX2 Base Context",
-    "TT_BaseContextPassthroughNode": "TT Context Passthrough",
+    "TT_ContextPassthroughNode": "TT Context Passthrough",
     "TT_ContextNode": "TT Context",
     "TT_ContextFlux2Node": "TT FLUX2 Context",
     "TT_ContextSetGuiderNode": "TT Context Set Guider",
@@ -232,9 +232,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TT_ContextExtractVaeNode": "TT Context Extract VAE Flux2",
     "TT_ContextExtractImageNode": "TT Context Extract Image Flux2",
     # Image
-    "TT_ImagePreviewSave": "TT Image Preview / Save",
-    "TT_ImagePreviewUpscaleSave": "TT Image Preview / Upscale / Save",
-    "TT_GuiderImageReference": "TT Guider Image Reference",
+    "TT_ImagePreviewSave": "TT Image Preview / Save  (Deprecated)",
+    "TT_ImagePreviewUpscaleSave": "TT Image Preview / Upscale / Save  (Deprecated)",
+    "TT_GuiderImageReference": "TT Guider Image Reference  (Deprecated)",
     # Image V3 Nodes
     "TT_ImageLoaderResizerNode": "TT Image Loader / Resizer",
     "TT_ImagePreviewSaveNode": "TT Image Preview / Save",

@@ -254,3 +254,7 @@ context pipeline and need to inject it back in for use by subsequent context-awa
 
 Use this node to pass context through your workflow while optionally modifying specific parameters without changing the
 rest of the context.
+
+---
+
+_(c) TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)_

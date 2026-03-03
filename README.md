@@ -81,4 +81,4 @@ Great thanks and appreciation for your excellent work!
 
 ---
 
-(c) 2026 TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)
+_(c) 2026 TenserTensor <tenser.tensor@proton.me> || Apache-2.0 (apache.org/licenses/LICENSE-2.0)_

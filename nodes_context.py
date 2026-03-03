@@ -235,7 +235,7 @@ class TT_BaseContextFlux2Node(ContextNode):
     RETURNS = ("context",)
 
 
-class TT_BaseContextPassthroughNode(ContextNode):
+class TT_ContextPassthroughNode(ContextNode):
     """Passes context through without modification."""
     REQUIRED = ("context",)
     OPTIONAL = ()
@@ -321,7 +321,7 @@ class ContextNodesExtension(ComfyExtension):
         return [
             TT_BaseContextNode,
             TT_BaseContextFlux2Node,
-            TT_BaseContextPassthroughNode,
+            TT_ContextPassthroughNode,
             TT_ContextNode,
             TT_ContextFlux2Node,
             TT_ContextSetGuiderNode,
@@ -345,7 +345,7 @@ async def comfy_entrypoint() -> ContextNodesExtension:
 __all__ = [
     "TT_BaseContextNode",
     "TT_BaseContextFlux2Node",
-    "TT_BaseContextPassthroughNode",
+    "TT_ContextPassthroughNode",
     "TT_ContextNode",
     "TT_ContextFlux2Node",
     "TT_ContextSetGuiderNode",
