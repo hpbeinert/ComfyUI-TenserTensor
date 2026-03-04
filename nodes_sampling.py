@@ -114,7 +114,7 @@ class TT_GuidedUpscaleKSamplerNode(IO.ComfyNode):
 # V3 entrypoint — registers context nodes with ComfyUI
 # ==============================================================================
 
-class LatentNodesExtension(ComfyExtension):
+class SamplingNodesExtension(ComfyExtension):
     @override
     async def get_node_list(self) -> list[type[IO.ComfyNode]]:
         return [
@@ -123,8 +123,8 @@ class LatentNodesExtension(ComfyExtension):
         ]
 
 
-async def comfy_entrypoint() -> LatentNodesExtension:
-    return LatentNodesExtension()
+async def comfy_entrypoint() -> SamplingNodesExtension:
+    return SamplingNodesExtension()
 
 
 # ==============================================================================

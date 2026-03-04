@@ -26,6 +26,11 @@ MEGAPIXELS = ["0.25 MP", "0.5 MP", "1 MP", "2 MP", "4 MP", "8 MP"]
 
 
 class SingleCondCFGGuider(samplers.CFGGuider):
+    @classmethod
+    def from_cfg_guider(cls, guider):
+        obj = cls.__new__(cls)
+        obj.__dict__.update(guider.__dict__)
+        return obj
 
     @override
     def set_conds(self, conditioning):
@@ -461,6 +466,9 @@ class TT_GuiderImageReferenceNode(io.ComfyNode):
             kwargs.get("megapixels"),
             kwargs.get("dimension_step")
         )
+
+        if not isinstance(guider, SingleCondCFGGuider):
+            guider = SingleCondCFGGuider.from_cfg_guider(guider)
 
         resized = resize_image_to_megapixels(timage, resize_method, megapixels, dimension_step)
         samples = vae_encode(resized, vae)

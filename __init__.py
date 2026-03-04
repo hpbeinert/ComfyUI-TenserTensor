@@ -15,3 +15,4 @@ print(f"{BRIGHT_CYAN}[V] Repository: https://github.com/tenser-tensor/ComfyUI-Te
 print(f"{BRIGHT_CYAN}[V] ComfyUI Registry: https://registry.comfy.org/publishers/tenser-tensor{RESET}")
 print(f"{BRIGHT_CYAN}[V] Please check README file: https://github.com/tenser-tensor/ComfyUI-TenserTensor/blob/main/README.md{RESET}")
 print(SEP)
+print()

@@ -26,7 +26,7 @@ try:
     from .nodes.context.large_context_flux import TT_LargeContextFlux
     from .nodes.context.large_context_sdxl import TT_LargeContextSdxl
 except ImportError:
-    print(f"{YELLOW}TenserTensor: {RED}ERROR: Image nodes unavailable{RESET}")
+    print(f"{YELLOW}TenserTensor: {RED}ERROR: Context nodes unavailable{RESET}")
 
 try:
     from .nodes.image.image_preview_save import TT_ImagePreviewSave
@@ -35,6 +35,11 @@ try:
     from .nodes_image import *
 except ImportError:
     print(f"{YELLOW}TenserTensor: {RED}ERROR: Image nodes unavailable{RESET}")
+
+try:
+    from .nodes_controlnet import *
+except ImportError:
+    print(f"{YELLOW}TenserTensor: {RED}ERROR: ControlNet nodes unavailable{RESET}")
 
 try:
     from .nodes.latent.latent_factory import TT_LatentFactory
@@ -134,6 +139,8 @@ NODE_CLASS_MAPPINGS = {
     "TT_ContextExtractGuidedSamplerFlux2Node": TT_ContextExtractGuidedSamplerFlux2Node,
     "TT_ContextExtractVaeNode": TT_ContextExtractVaeNode,
     "TT_ContextExtractImageNode": TT_ContextExtractImageNode,
+    # ControlNet V3 Nodes
+    "TT_Flux2ApplyControlNetNode": TT_Flux2ApplyControlNetNode,
     # Image
     "TT_ImagePreviewSave": TT_ImagePreviewSave,
     "TT_ImagePreviewUpscaleSave": TT_ImagePreviewUpscaleSave,
@@ -217,6 +224,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TT_ContextExtractGuidedSamplerFlux2Node": "TT Context Extract Guided Sampler Flux2",
     "TT_ContextExtractVaeNode": "TT Context Extract VAE Flux2",
     "TT_ContextExtractImageNode": "TT Context Extract Image Flux2",
+    # ControlNet V3 Nodes
+    "TT_Flux2ApplyControlNetNode": "TT Flux2 Apply ControlNet",
     # Image
     "TT_ImagePreviewSave": "TT Image Preview / Save  (Deprecated)",
     "TT_ImagePreviewUpscaleSave": "TT Image Preview / Upscale / Save  (Deprecated)",
