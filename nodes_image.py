@@ -471,12 +471,12 @@ class TT_GuiderImageReferenceNode(io.ComfyNode):
             guider = SingleCondCFGGuider.from_cfg_guider(guider)
 
         resized = resize_image_to_megapixels(timage, resize_method, megapixels, dimension_step)
-        samples = vae_encode(resized, vae)
+        latent = vae_encode(resized, vae)
 
         conditioning = guider.get_conds()
 
         if conditioning is not None:
-            conditioning = conditioning_set_values(conditioning, {"reference_latents": [samples]}, append=True)
+            conditioning = conditioning_set_values(conditioning, {"reference_latents": [latent["samples"]]}, append=True)
             guider.set_conds(conditioning)
         else:
             raise ValueError("ERROR: Guider has no conditioning")

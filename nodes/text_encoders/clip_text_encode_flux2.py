@@ -19,7 +19,7 @@ class TT_ClipTextEncodeFlux2():
     RETURN_TYPES = ("GUIDER",)
     RETURN_NAMES = ("GUIDER",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/FLUX2"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/FLUX2"
 
     def execute(self, model, clip, prompt, lora_triggers, guidance):
         return encode_prompts_flux2(model, clip, prompt, lora_triggers, guidance)

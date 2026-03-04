@@ -4,13 +4,13 @@ from typing import override
 
 import folder_paths
 from comfy import controlnet
-from comfy_api.latest import io, ComfyExtension
-from .nodes_image import SingleCondCFGGuider
+from comfy_api.latest import io, ui, ComfyExtension
+from .nodes_image import SingleCondCFGGuider, get_image_files, load_image
 
 CATEGORY = "TenserTensor/ControlNet"
 
 
-def get_control_net_names():
+def get_control_net_files():
     return folder_paths.get_filename_list("controlnet")
 
 
@@ -26,7 +26,7 @@ def load_control_net(filename):
 def apply_control_net(**kwargs):
     guider, image, loaded_cnet = (
         kwargs.get("guider"),
-        kwargs.get("image"),
+        kwargs.get("cond_hint"),
         kwargs.get("loaded_cnet"),
     )
     conditioning = guider.get_conds()
@@ -69,9 +69,10 @@ class TT_Flux2ApplyControlNetNode(io.ComfyNode):
             description="",
             inputs=[
                 io.Guider.Input("guider"),
-                io.Image.Input("image"),
+                io.Image.Input("reference_image"),
+                io.ControlNet.Input("control_net_opt", optional=True),
                 io.Vae.Input("vae_opt", optional=True),
-                io.Combo.Input("control_net", options=get_control_net_names()),
+                io.Combo.Input("control_net", options=get_control_net_files()),
                 io.Float.Input("strength", default=1.0, min=0.0, max=10.0, step=0.1),
                 io.Float.Input("start_percent", default=0.0, min=0.0, max=100.0, step=0.1, advanced=True),
                 io.Float.Input("end_percent", default=100.0, min=0.0, max=100.0, step=0.1, advanced=True),
@@ -94,10 +95,71 @@ class TT_Flux2ApplyControlNetNode(io.ComfyNode):
         if strength == 0.0:
             return io.NodeOutput(guider)
 
-        kwargs["loaded_cnet"] = load_control_net(kwargs.get("control_net"))
+        loaded_cnet = kwargs.get("control_net_opt")
+        kwargs["loaded_cnet"] = (
+            loaded_cnet
+            if loaded_cnet is not None
+            else load_control_net(kwargs.get("control_net"))
+        )
+        kwargs["cond_hint"] = kwargs.get("reference_image")
         guider = apply_control_net(**kwargs)
 
         return io.NodeOutput(guider)
+
+
+class TT_Flux2ApplyControlNetAdvancedNode(io.ComfyNode):
+    @classmethod
+    def define_schema(cls) -> io.Schema:
+        return io.Schema(
+            node_id="TT_Flux2ApplyControlNetAdvancedNode",
+            display_name="TT FLUX2 Apply ControlNet (Advanced)",
+            category=CATEGORY,
+            description="",
+            inputs=[
+                io.Guider.Input("guider"),
+                io.ControlNet.Input("control_net_opt", optional=True),
+                io.Image.Input("reference_image_opt", optional=True),
+                io.Vae.Input("vae_opt", optional=True),
+                io.Combo.Input("control_net", options=get_control_net_files()),
+                io.Float.Input("strength", default=1.0, min=0.0, max=10.0, step=0.1),
+                io.Float.Input("start_percent", default=0.0, min=0.0, max=100.0, step=0.1, advanced=True),
+                io.Float.Input("end_percent", default=100.0, min=0.0, max=100.0, step=0.1, advanced=True),
+                io.Combo.Input("reference_image", options=get_image_files(), upload=io.UploadType.image)
+            ],
+            outputs=[
+                io.Guider.Output("GUIDER"),
+            ]
+        )
+
+    @classmethod
+    def execute(cls, **kwargs) -> io.NodeOutput:
+        guider, strength, control_net = (
+            kwargs.get("guider"),
+            kwargs.get("strength"),
+            kwargs.get("control_net"))
+
+        if not isinstance(guider, SingleCondCFGGuider):
+            guider = SingleCondCFGGuider.from_cfg_guider(guider)
+
+        if strength == 0.0:
+            return io.NodeOutput(guider)
+
+        reference_image = kwargs.get("reference_image_opt")
+        kwargs["cond_hint"] = (
+            reference_image
+            if reference_image is not None
+            else load_image(kwargs.get("reference_image"))[0]
+        )
+
+        loaded_cnet = kwargs.get("control_net_opt")
+        kwargs["loaded_cnet"] = (
+            loaded_cnet
+            if loaded_cnet is not None
+            else load_control_net(kwargs.get("control_net"))
+        )
+        guider = apply_control_net(**kwargs)
+
+        return io.NodeOutput(guider, ui=ui.PreviewImage(kwargs["cond_hint"], cls=cls))
 
 
 # ==============================================================================
@@ -109,6 +171,7 @@ class ControlNetNodesExtension(ComfyExtension):
     async def get_node_list(self) -> list[type[io.ComfyNode]]:
         return [
             TT_Flux2ApplyControlNetNode,
+            TT_Flux2ApplyControlNetAdvancedNode,
         ]
 
 
@@ -122,4 +185,5 @@ async def comfy_entrypoint() -> ControlNetNodesExtension:
 
 __all__ = [
     "TT_Flux2ApplyControlNetNode",
+    "TT_Flux2ApplyControlNetAdvancedNode",
 ]

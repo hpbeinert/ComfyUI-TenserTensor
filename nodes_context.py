@@ -112,8 +112,8 @@ class Context:
             super().__init__(id, **kwargs)
 
     class Output(IO.Output):
-        def __init__(self, **kwargs):
-            super().__init__(**kwargs)
+        def __init__(self, id: str, **kwargs):
+            super().__init__(id, **kwargs)
 
 
 class ContextNode(IO.ComfyNode):

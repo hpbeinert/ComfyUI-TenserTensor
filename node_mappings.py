@@ -29,6 +29,11 @@ except ImportError:
     print(f"{YELLOW}TenserTensor: {RED}ERROR: Context nodes unavailable{RESET}")
 
 try:
+    from .nodes_detector import *
+except ImportError:
+    print(f"{YELLOW}TenserTensor: {RED}ERROR: Detector nodes unavailable{RESET}")
+
+try:
     from .nodes.image.image_preview_save import TT_ImagePreviewSave
     from .nodes.image.image_preview_upscale_save import TT_ImagePreviewUpscaleSave
     from .nodes.image.guider_image_reference import TT_GuiderImageReference
@@ -84,6 +89,7 @@ try:
     from .nodes.text_encoders.clip_text_encode_sdxl_context import TT_ClipTextEncodeSdxlContext
     from .nodes.text_encoders.clip_text_encode_flux2 import TT_ClipTextEncodeFlux2
     from .nodes.text_encoders.clip_text_encode_flux2_context import TT_ClipTextEncodeFlux2Context
+    from .nodes_text_encoder import *
 except ImportError:
     print(f"{YELLOW}TenserTensor: {RED}ERROR: Text Encoder nodes unavailable{RESET}")
 
@@ -141,6 +147,9 @@ NODE_CLASS_MAPPINGS = {
     "TT_ContextExtractImageNode": TT_ContextExtractImageNode,
     # ControlNet V3 Nodes
     "TT_Flux2ApplyControlNetNode": TT_Flux2ApplyControlNetNode,
+    "TT_Flux2ApplyControlNetAdvancedNode": TT_Flux2ApplyControlNetAdvancedNode,
+    # Detector V3 Nodes
+    "TT_CannyEdgeDetectorNode": TT_CannyEdgeDetectorNode,
     # Image
     "TT_ImagePreviewSave": TT_ImagePreviewSave,
     "TT_ImagePreviewUpscaleSave": TT_ImagePreviewUpscaleSave,
@@ -183,6 +192,9 @@ NODE_CLASS_MAPPINGS = {
     "TT_ClipTextEncodeSdxlContext": TT_ClipTextEncodeSdxlContext,
     "TT_ClipTextEncodeFlux2": TT_ClipTextEncodeFlux2,
     "TT_ClipTextEncodeFlux2Context": TT_ClipTextEncodeFlux2Context,
+    # Text Encoder V3 Nodes
+    "TT_Flux2TextEncoderNode": TT_Flux2TextEncoderNode,
+    "TT_Flux2TextEncoderContextNode": TT_Flux2TextEncoderContextNode,
     # VAE
     "TT_VaeDecodeContext": TT_VaeDecodeContext,
     "TT_VaeDecodeTiled": TT_VaeDecodeTiled,
@@ -226,6 +238,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TT_ContextExtractImageNode": "TT Context Extract Image Flux2",
     # ControlNet V3 Nodes
     "TT_Flux2ApplyControlNetNode": "TT Flux2 Apply ControlNet",
+    "TT_Flux2ApplyControlNetAdvancedNode": "TT FLUX2 Apply ControlNet (Advanced)",
+    # Detector V3 Nodes
+    "TT_CannyEdgeDetectorNode": "TT_Canny Edge Detector",
     # Image
     "TT_ImagePreviewSave": "TT Image Preview / Save  (Deprecated)",
     "TT_ImagePreviewUpscaleSave": "TT Image Preview / Upscale / Save  (Deprecated)",
@@ -268,6 +283,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TT_ClipTextEncodeSdxlContext": "TT CLIP Text Encode SDXL (Context)",
     "TT_ClipTextEncodeFlux2": "TT CLIP Text Encode FLUX2",
     "TT_ClipTextEncodeFlux2Context": "TT CLIP Text Encode FLUX2 (Context)",
+    # Text Encoder V3 Nodes
+    "TT_Flux2TextEncoderNode":"",
+    "TT_Flux2TextEncoderContextNode":"",
     # VAE
     "TT_VaeDecodeContext": "TT VAE Decode (Context)",
     "TT_VaeDecodeTiled": "TT VAE Decode (Tiled)",

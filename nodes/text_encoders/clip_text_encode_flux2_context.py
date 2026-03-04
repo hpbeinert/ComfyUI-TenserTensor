@@ -15,7 +15,7 @@ class TT_ClipTextEncodeFlux2Context():
     RETURN_TYPES = ("TT_CONTEXT", "GUIDER",)
     RETURN_NAMES = ("CONTEXT", "GUIDER",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/FLUX2"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/FLUX2"
 
     def execute(self, context):
         model = context.get("model", None)
