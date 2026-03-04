@@ -9,7 +9,7 @@ from comfy_api.latest import ComfyExtension, IO
 # V3 entrypoint — registers context nodes with ComfyUI
 # ==============================================================================
 
-class VaeNodesExtension(ComfyExtension):
+class PostproductionNodesExtension(ComfyExtension):
     @override
     async def get_node_list(self) -> list[type[IO.ComfyNode]]:
         return [
@@ -17,8 +17,8 @@ class VaeNodesExtension(ComfyExtension):
         ]
 
 
-async def comfy_entrypoint() -> VaeNodesExtension:
-    return VaeNodesExtension()
+async def comfy_entrypoint() -> PostproductionNodesExtension:
+    return PostproductionNodesExtension()
 
 
 # ==============================================================================
