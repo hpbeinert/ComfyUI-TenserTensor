@@ -16,7 +16,11 @@ def get_control_net_files():
 
 def load_control_net(filename):
     cnet_path = folder_paths.get_full_path_or_raise("controlnet", filename)
+
+    print(f"CNET path: {cnet_path}")
+
     cnet = controlnet.load_controlnet(cnet_path)
+
     if cnet is None:
         raise RuntimeError("ERROR: ControlNet file is invalid or corrupted.")
 

@@ -26,7 +26,7 @@ class TT_ClipTextEncodeSdxl():
     RETURN_TYPES = ("CONDITIONING", "CONDITIONING",)
     RETURN_NAMES = ("POSITIVE", "NEGATIVE",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/SDXL"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/SDXL"
 
     def execute(self, **kwargs):
         return encode_prompts_sdxl(**kwargs)

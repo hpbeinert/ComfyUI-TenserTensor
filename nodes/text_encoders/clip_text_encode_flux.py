@@ -20,7 +20,7 @@ class TT_ClipTextEncodeFlux():
     RETURN_TYPES = ("CONDITIONING", "CONDITIONING",)
     RETURN_NAMES = ("POSITIVE", "NEGATIVE",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/FLUX"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/FLUX"
 
     def execute(self, **kwargs):
         return encode_prompts_flux(**kwargs)

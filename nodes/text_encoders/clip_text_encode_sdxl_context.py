@@ -15,7 +15,7 @@ class TT_ClipTextEncodeSdxlContext():
     RETURN_TYPES = ("TT_CONTEXT", "CONDITIONING", "CONDITIONING",)
     RETURN_NAMES = ("CONTEXT", "POSITIVE", "NEGATIVE",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/SDXL"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/SDXL"
 
     def execute(self, context):
         clip = context["clip"]

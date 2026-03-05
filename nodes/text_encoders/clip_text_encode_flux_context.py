@@ -15,7 +15,7 @@ class TT_ClipTextEncodeFluxContext():
     RETURN_TYPES = ("TT_CONTEXT", "CONDITIONING", "CONDITIONING",)
     RETURN_NAMES = ("CONTEXT", "POSITIVE", "NEGATIVE",)
     FUNCTION = "execute"
-    CATEGORY = "TenserTensor/Text Encoders/FLUX"
+    CATEGORY = "TenserTensor/Deprecated/Text Encoders/FLUX"
 
     def execute(self, context):
         clip = context["clip"]
